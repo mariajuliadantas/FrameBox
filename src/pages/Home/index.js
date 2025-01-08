@@ -5,6 +5,8 @@ import './home.css';
 
 function Home() {
   const [filmes, setFilmes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     async function loadFilmes() {
@@ -18,6 +20,7 @@ function Home() {
 
         // Atualiza o estado com a lista de filmes
         setFilmes(response.data.results);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar os filmes:", error);
       }
@@ -25,6 +28,10 @@ function Home() {
 
     loadFilmes();
   }, []);
+
+  if(loading){
+    return <div>Carregando...</div>;
+  }
 
   return (
     <div className="container">
