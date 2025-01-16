@@ -11,10 +11,12 @@ body {
 }
 
 /* Header */
+/* Header */
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+ 
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
   padding: 10px 20px;
   background: rgba(0, 0, 0, 0.8);
   position: fixed;
@@ -26,18 +28,26 @@ body {
 .header h1 {
   font-size: 1.5em;
   color: #ffc107;
+  margin-bottom: 5px; /* Adiciona espaço entre o título e os links */
+  margin-right: 900px;
+}
+
+.header nav {
+  display: flex; /* Mantém os links em linha */
+  gap: 15px; /* Espaçamento entre os links */
 }
 
 .header nav a {
   color: white;
-  margin: 0 10px;
   text-decoration: none;
   font-size: 1em;
+  text-align: center;
 }
 
 .header nav a:hover {
   color: #ffc107;
 }
+
 
 .profile-icon {
   font-size: 1.5em;
@@ -53,6 +63,14 @@ body {
   justify-content: flex-start;
   padding: 20px;
   position: relative;
+}
+.texto {
+  display: flex; /* Habilita Flexbox */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 100vh; /* Altura total da janela */
+  text-align: center; /* Garante que o texto dentro do elemento seja centralizado */
+  margin-left: 700px;
 }
 
 .filme-detalhes {
@@ -99,29 +117,76 @@ body {
 
 /* Carrossel de filmes */
 .carrossel-filmes {
-  display: flex;
-  overflow-x: scroll;
+  display: grid; /* Organiza os filmes em grid */
+  grid-template-columns: repeat(10, 220px); /* 20 filmes (10 por linha visíveis) */
+  grid-template-rows: repeat(2, 350px); /* 2 linhas fixas */
+  gap: 20px; /* Espaçamento entre os filmes */
+  overflow-x: hidden; /* Ativa o scroll horizontal */
+  overflow-y: hidden; /* Remove o scroll vertical */
+  scroll-behavior: smooth; /* Suaviza o scroll */
+  width: 100%; /* Largura do container */
   padding: 20px;
-  gap: 15px;
-  margin-top: -80px; /* Para subir o carrossel próximo ao destaque */
-  z-index: 50;
+  white-space: nowrap; /* Impede que o conteúdo quebre para novas linhas */
+  box-sizing: border-box; /* Garante que o padding seja incluído no tamanho */
 }
 
-.carrossel-filmes::-webkit-scrollbar {
-  display: none;
+/* Container do carrossel com botões */
+.carrossel-container {
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
 }
 
+.carrossel-linha {
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Botões de navegação */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.scroll-button:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+/* Filmes */
 .filme-card {
-  min-width: 150px;
+  width: 220px; /* Largura fixa */
+  height: 350px; /* Altura fixa */
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s;
 }
 
 .filme-card img {
   width: 100%;
-  border-radius: 8px;
+  height: 100%;
+  object-fit: cover; /* Ajusta a imagem à proporção correta */
 }
 
 .filme-card:hover {
-  transform: scale(1.1);
+  transform: scale(1.1); /* Efeito de hover */
 }

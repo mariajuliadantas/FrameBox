@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../../services/api";
 import "./home.css";
+import { ToastContainer, toast } from "react-toastify";
 
 function Home() {
   const [filmes, setFilmes] = useState([]);
   const [filmeDestaque, setFilmeDestaque] = useState(null);
+
+  // Referência para o carrossel
+  const carrosselRef = useRef(null);
 
   useEffect(() => {
     async function loadFilmes() {
@@ -22,21 +26,53 @@ function Home() {
     loadFilmes();
   }, []);
 
+  const adicionarAosFavoritos = (filme) => {
+    const lista = JSON.parse(localStorage.getItem("minhaLista")) || [];
+    const filmeExiste = lista.some((item) => item.id === filme.id);
+
+    if (filmeExiste) {
+      toast.warning(`O filme "${filme.title}" já está na sua lista!`);
+      return;
+    }
+
+    lista.push(filme);
+    localStorage.setItem("minhaLista", JSON.stringify(lista));
+
+    toast.success(`Filme "${filme.title}" adicionado à lista!`);
+  };
+
   const handleDestaque = (filme) => {
     setFilmeDestaque(filme);
   };
 
+  const scrollLeft = () => {
+    carrosselRef.current.scrollBy({
+      top: 0,
+      left: -300, // Quantidade de scroll horizontal para a esquerda
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRight = () => {
+    carrosselRef.current.scrollBy({
+      top: 0,
+      left: 300, // Quantidade de scroll horizontal para a direita
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="home-container">
+      {/* ToastContainer */}
+      <ToastContainer />
+
       {/* Header */}
       <header className="header">
-        <h1>FILMFLIX</h1>
+        <h1>FRAMEBOX</h1>
         <nav>
           <a href="/">Home</a>
-          <a href="/filmes">Filmes</a>
-          <a href="/series">Séries</a>
+          <a href="/minha-lista">Minha Lista</a>
         </nav>
-        <div className="profile-icon">👤</div>
       </header>
 
       {/* Filme em destaque */}
@@ -51,11 +87,12 @@ function Home() {
             <h2>{filmeDestaque.title}</h2>
             <div className="filme-info">
               <span>⭐ {filmeDestaque.vote_average}</span>
-              <span>{filmeDestaque.genre_ids.join(" | ")}</span>
             </div>
             <p>{filmeDestaque.overview}</p>
             <div className="filme-actions">
-              <button>+</button>
+              <button onClick={() => adicionarAosFavoritos(filmeDestaque)}>
+                +
+              </button>
               <button
                 onClick={() =>
                   window.open(
@@ -72,19 +109,27 @@ function Home() {
       )}
 
       {/* Lista de filmes */}
-      <div className="carrossel-filmes">
-        {filmes.map((filme) => (
-          <div
-            key={filme.id}
-            className="filme-card"
-            onClick={() => handleDestaque(filme)}
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
-              alt={filme.title}
-            />
-          </div>
-        ))}
+      <div className="carrossel-container">
+        <button className="scroll-button left" onClick={scrollLeft}>
+          ◀
+        </button>
+        <div className="carrossel-filmes" ref={carrosselRef}>
+          {filmes.map((filme) => (
+            <div
+              key={filme.id}
+              className="filme-card"
+              onClick={() => handleDestaque(filme)}
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
+                alt={filme.title}
+              />
+            </div>
+          ))}
+        </div>
+        <button className="scroll-button right" onClick={scrollRight}>
+          ▶
+        </button>
       </div>
     </div>
   );
