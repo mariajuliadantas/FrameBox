@@ -1,42 +1,127 @@
+/* Estilo geral */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #000;
+}
 
-.lista-filmes{
-    max-width: 800px;
-    margin: 14px auto;
-  }
-  
-  .lista-filmes article{
-    width: 100%;
-    background-color: #FFF;
-    padding: 15px;
-    border-radius: 4px;
-  }
-  
-  .lista-filmes strong{
-    margin-bottom: 14px;
-    text-align: center;
-    font-size: 22px;
-    display: block;
-  }
-  
-  .lista-filmes img{
-    width: 900px;
-    max-width: 100%;
-    max-height: 340px;
-    object-fit: cover;
-    display: block;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-  
-  .lista-filmes a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
-    font-size: 24px;
-    background-color: #116FEB;
-    text-decoration: none;
-    color: #FFF;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
+.home-container {
+  position: relative;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.header h1 {
+  font-size: 1.5em;
+  color: #ffc107;
+}
+
+.header nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.header nav a:hover {
+  color: #ffc107;
+}
+
+.profile-icon {
+  font-size: 1.5em;
+}
+
+/* Filme em destaque */
+.filme-destaque {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  position: relative;
+}
+
+.filme-detalhes {
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.filme-detalhes h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.filme-info {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+.filme-info span {
+  margin-right: 10px;
+}
+
+.filme-detalhes p {
+  margin-bottom: 15px;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.filme-actions button {
+  background: #ffc107;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1em;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filme-actions button:hover {
+  background: #e0a800;
+}
+
+/* Carrossel de filmes */
+.carrossel-filmes {
+  display: flex;
+  overflow-x: scroll;
+  padding: 20px;
+  gap: 15px;
+  margin-top: -80px; /* Para subir o carrossel próximo ao destaque */
+  z-index: 50;
+}
+
+.carrossel-filmes::-webkit-scrollbar {
+  display: none;
+}
+
+.filme-card {
+  min-width: 150px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.filme-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.filme-card:hover {
+  transform: scale(1.1);
+}
